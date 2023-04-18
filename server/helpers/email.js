@@ -29,7 +29,7 @@ export const emailTemplate = (email, content, replyTo, subject) => {
       },
       Subject: {
         Charset: "UTF-8",
-        Data: "Welcome to Realist",
+        Data: `${subject}`,
       },
     },
   };
