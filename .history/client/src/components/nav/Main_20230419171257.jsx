@@ -21,20 +21,16 @@ export default function Main() {
     const loggedIn =
         auth.user !== null && auth.token !== "" && auth.refreshToken !== ""
 
-    const handlePostAdClick = () => {
-        if (loggedIn) {
-            navigate("/ad/create")
-        } else {
-            navigate("/login")
-        }
+const handlePostAdClick = () =>{
+    if(loggedIn) {
+        navigate("/ad/creat")
     }
+}
 
     return (
         <nav className="nav d-flex justify-content-between lead">
-
             <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-
-            <a className="nav-link pointer" onClick={handlePostAdClick}>Post Ad</a>
+            <a onClick={handlePostAdClick}>Post Ad</a>
 
             {!loggedIn ?
                 (

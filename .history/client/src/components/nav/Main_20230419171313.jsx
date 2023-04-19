@@ -31,10 +31,8 @@ export default function Main() {
 
     return (
         <nav className="nav d-flex justify-content-between lead">
-
             <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
-
-            <a className="nav-link pointer" onClick={handlePostAdClick}>Post Ad</a>
+            <a onClick={handlePostAdClick}>Post Ad</a>
 
             {!loggedIn ?
                 (
