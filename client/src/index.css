@@ -11,3 +11,8 @@
   transform: scale(1.01);
   box-shadow: 0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.14) !important;
 }
+
+.react-photo-gallery--gallery img{
+  object-fit: cover;
+  max-height: 500px !important;
+}
