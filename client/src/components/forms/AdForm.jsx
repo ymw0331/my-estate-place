@@ -27,6 +27,9 @@ export const AdForm = ({ action, type }) => {
         action
     })
 
+    // hooks
+    const navigate = useNavigate()
+
     const handleClick = async () => {
 
         try {
@@ -40,7 +43,7 @@ export const AdForm = ({ action, type }) => {
             } else {
                 toast.success("Ad created successfully")
                 setAd({ ...ad, loading: false })
-                // navigate("/dashboard")
+                navigate("/dashboard")
             }
 
         } catch (err) {
@@ -66,7 +69,6 @@ export const AdForm = ({ action, type }) => {
                         }
                     }}
                 />
-
                 <div style={{ marginTop: "80px" }}>
                     <CurrencyInput
                         placeholder="Enter price"
@@ -77,32 +79,39 @@ export const AdForm = ({ action, type }) => {
                 </div>
 
 
-                <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bedrooms"
-                    value={ad.bedrooms}
-                    onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
-                />
 
-                <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many bathrooms"
-                    value={ad.bathrooms}
-                    onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
-                />
+                {type === "House" ? (
+                    <>
+                        <input
+                            type="number"
+                            min="0"
+                            className="form-control mb-3"
+                            placeholder="Enter how many bedrooms"
+                            value={ad.bedrooms}
+                            onChange={(e) => setAd({ ...ad, bedrooms: e.target.value })}
+                        />
 
-                <input
-                    type="number"
-                    min="0"
-                    className="form-control mb-3"
-                    placeholder="Enter how many carpark"
-                    value={ad.carparks}
-                    onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
-                />
+                        <input
+                            type="number"
+                            min="0"
+                            className="form-control mb-3"
+                            placeholder="Enter how many bathrooms"
+                            value={ad.bathrooms}
+                            onChange={(e) => setAd({ ...ad, bathrooms: e.target.value })}
+                        />
+
+                        <input
+                            type="number"
+                            min="0"
+                            className="form-control mb-3"
+                            placeholder="Enter how many carpark"
+                            value={ad.carparks}
+                            onChange={(e) => setAd({ ...ad, carpark: e.target.value })}
+                        />
+
+                    </>
+                ) : ""}
+
 
                 <input
                     type="text"
@@ -113,14 +122,18 @@ export const AdForm = ({ action, type }) => {
                     onChange={(e) => setAd({ ...ad, landsize: e.target.value })}
                 />
 
-                <textarea
+                <input
+                    type="text"
+                    min="0"
                     className="form-control mb-3"
                     placeholder="Enter title"
                     value={ad.title}
                     onChange={(e) => setAd({ ...ad, title: e.target.value })}
                 />
 
-                <textarea
+                <input
+                    type="text"
+                    min="0"
                     className="form-control mb-3"
                     placeholder="Enter description"
                     value={ad.description}
@@ -129,9 +142,12 @@ export const AdForm = ({ action, type }) => {
 
                 <button
                     onClick={handleClick}
-                    className="btn btn-primary" > Submit</button>
+                    className={`btn btn-primary ${ad?.loading ? 'disabled' : ""} mb-5`} >
+                    {ad.loading ? "Saving..." : "Submit"}
+                </button>
 
-                <pre>{JSON.stringify(ad, null, 4)}</pre>
+
+                {/* <pre>{JSON.stringify(ad, null, 4)}</pre> */}
             </div>
 
         </>

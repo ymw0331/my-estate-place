@@ -104,6 +104,7 @@ export const create = async (req, res) => {
                 coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
             },
             googleMap: geo,
+            slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`)
         }).save()
 
         // make user role > Seller
@@ -126,4 +127,26 @@ export const create = async (req, res) => {
         res.json({ error: `Something went wrong. Try again.  Error: ${err}` })
         console.log(err)
     }
+}
+
+
+export const ads = async (req, res) => {
+    try {
+        const adsForSell = await Ad.find({ action: "Sell" })
+            .select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+            .sort({ createdAt: -1 })
+            .limit(12)
+
+        const adsForRent = await Ad.find({ action: "Rent" })
+            .select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+            .sort({ createdAt: -1 })
+            .limit(12)
+
+        res.json({ adsForSell, adsForRent })
+
+    } catch (err) {
+        console.log(err)
+    }
+
+
 }
