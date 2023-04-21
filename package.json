@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "react-currency-input-field": "^3.6.10",
+    "react-google-places-autocomplete": "^4.0.1",
+    "react-image-file-resizer": "^0.4.8"
+  }
+}
