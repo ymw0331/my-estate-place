@@ -1,5 +1,9 @@
 import * as config from "../config.js"
 import { nanoid } from "nanoid"
+import slugify from "slugify";
+import Ad from "../models/ad.js"
+import User from "../models/user.js"
+import NodeGeocoder from "node-geocoder"
 
 export const uploadImage = async (req, res, next) => {
 
@@ -46,13 +50,13 @@ export const removeImage = async (req, res) => {
     try {
 
         const { Key, Bucket } = req.body
-        
-        config.AWSS3.deleteObject({Bucket, Key} , (err, data) =>{
-            if(err) {
+
+        config.AWSS3.deleteObject({ Bucket, Key }, (err, data) => {
+            if (err) {
                 console.log(err)
                 res.sendStatus(400)
-            }else{
-                res.send({ok: true})
+            } else {
+                res.send({ ok: true })
             }
         })
 
@@ -60,5 +64,66 @@ export const removeImage = async (req, res) => {
     } catch (error) {
 
         console.log(error)
+    }
+}
+
+export const create = async (req, res) => {
+    try {
+        // console.log(req.body)
+        const { photos, price, description, title, address, type, landsize } = req.body
+        if (!photos?.length) {
+            return res.json({ error: "Photos are required" })
+        }
+        else if (!price) {
+            return res.json({ error: "Price are required" })
+        }
+        else if (!type) {
+            return res.json({ error: "Is property house or land" })
+        }
+        else if (!address) {
+            return res.json({ error: "Address is required" })
+        }
+        else if (!description) {
+            return res.json({ error: "Description is required" })
+        }
+        else if (!title) {
+            return res.json({ error: "Title is required" })
+        }
+        else if (!landsize) {
+            return res.json({ error: "Landsize is required" })
+        }
+
+        const geo = await config.GOOGLE_GEOCODER.geocode(address)
+        // console.log("geo => ", geo)
+
+        const ad = await new Ad({
+            ...req.body,
+            postedBy: req.user._id,
+            location: {
+                type: "Point",
+                coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
+            },
+            googleMap: geo,
+        }).save()
+
+        // make user role > Seller
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $addToSet: { role: "Seller" },
+            },
+            { new: true }
+        )
+
+        user.password = undefined
+        user.resetCode = undefined
+
+        res.json({
+            ad, user
+        })
+
+    } catch (err) {
+        res.json({ error: `Something went wrong. Try again.  Error: ${err}` })
+        console.log(err)
     }
 }
