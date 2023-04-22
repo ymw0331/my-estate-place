@@ -12,7 +12,7 @@ export const Login = () => {
 
     // states
     const [email, setEmail] = useState("johnturner1212@gmail.com")
-    const [password, setPassword] = useState("john1212")
+    const [password, setPassword] = useState("john123")
     const [loading, setLoading] = useState(false);
 
     // hooks

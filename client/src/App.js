@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from "./contexts/auth"
+import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Main from "./components/nav/Main"
 import Register from "./pages/Register";
-import { Toaster } from "react-hot-toast";
 import AccountActivate from "./pages/auth/AccountActivate";
 import ForgotPassword from "./pages/auth/ForgotPassword"
 import AccessAccount from "./pages/auth/AccessAccount";
@@ -17,6 +17,8 @@ import RentHouse from "./pages/user/ad/RentHouse";
 import RentLand from "./pages/user/ad/RentLand";
 import AdView from "./pages/AdView"
 import Footer from "./components/nav/Footer";
+import Profile from "./pages/user/Profile";
+import Settings from "./pages/user/Setttings";
 
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
             <Route path="/auth/forgot-password/" element={<ForgotPassword />} />
             <Route path="/auth/access-account/:token" element={<AccessAccount />} />
 
-
+            {/* This is private routes, only authenticated users can access */}
             <Route path="/" element={<PrivateRoute />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="ad/create" element={<AdCreate />} />
@@ -42,9 +44,14 @@ function App() {
               <Route path="ad/create/sell/land" element={<SellLand />} />
               <Route path="ad/create/rent/house" element={<RentHouse />} />
               <Route path="ad/create/rent/land" element={<RentLand />} />
+              <Route path="user/profile" element={<Profile />} />
+              <Route path="user/settings" element={<Settings />} />
+
             </Route>
 
             <Route path="/ad/:slug" element={<AdView />} />
+
+
 
 
           </Routes>

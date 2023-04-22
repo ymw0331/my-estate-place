@@ -6,8 +6,6 @@ import User from "../models/user.js"
 import NodeGeocoder from "node-geocoder"
 
 export const uploadImage = async (req, res, next) => {
-
-
     try {
         // console.log(req.body);
         const { image } = req.body;
@@ -46,11 +44,8 @@ export const uploadImage = async (req, res, next) => {
 
 
 export const removeImage = async (req, res) => {
-
     try {
-
         const { Key, Bucket } = req.body
-
         config.AWSS3.deleteObject({ Bucket, Key }, (err, data) => {
             if (err) {
                 console.log(err)
@@ -60,9 +55,7 @@ export const removeImage = async (req, res) => {
             }
         })
 
-
     } catch (error) {
-
         console.log(error)
     }
 }
@@ -197,7 +190,6 @@ export const addToWishlist = async (req, res) => {
 
 
 export const removeFromWishlist = async (req, res) => {
-
     try {
         const user = await User.findByIdAndUpdate(req.user._id, {
             $pull: { wishlist: req.params.adId }, //remove adId as its params
