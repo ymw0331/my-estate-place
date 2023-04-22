@@ -6,6 +6,7 @@ import User from "../models/user.js";
 import { nanoid } from "nanoid";
 import validator from "email-validator";
 
+
 const tokenAndUserResponse = (req, res, user) => {
   const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
     expiresIn: "1d",
@@ -113,6 +114,11 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     // 1 find user by email
     const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.json({ error: "No user found. Please register" })
+    }
+
     // 2 compare password
     const match = await comparePassword(password, user.password);
     if (!match) {

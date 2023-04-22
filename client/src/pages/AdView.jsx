@@ -11,6 +11,7 @@ import MapCard from "../components/cards/MapCard";
 import LikeUnlike from "../components/misc/LikeUnlike";
 import HTMLRenderer from 'react-html-renderer'
 import AdCard from "../components/cards/AdCard";
+import ContactSeller from "../components/forms/ContactSeller";
 
 dayjs.extend(relativeTime) //fromNow() // 3hours ago
 
@@ -99,9 +100,13 @@ export default function AdView() {
                 </div>
             </div>
         </div>
+        <div className="container">
+            <ContactSeller ad={ad} />
+        </div>
+
         <div className="container-fluid">
             <h4 className="text-center mb-3">Related Properties</h4>
-            <hr style={{ width: "33%"}} />
+            <hr style={{ width: "33%" }} />
 
             <div className="row">
                 {related?.map((ad) => (
