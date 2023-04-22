@@ -11,7 +11,6 @@ export default function ImageGallery({ photos }) {
     //hooks
     const params = useParams()
 
-
     const openLightbox = useCallback((event, { photo, index }) => {
         setCurrent(index)
         setIsOpen(true)
@@ -23,7 +22,7 @@ export default function ImageGallery({ photos }) {
     }
 
     return <>
-        <Gallery photos={photos} onClick={openLightbox} />;
+        <Gallery photos={photos} onClick={openLightbox} />
 
         <ModalGateway>
             {isOpen ? (

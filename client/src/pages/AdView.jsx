@@ -7,7 +7,10 @@ import AdFeatures from "../components/cards/AdFeatures";
 import { formatNumber } from "../helpers/ad";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime'
+import MapCard from "../components/cards/MapCard";
 import LikeUnlike from "../components/misc/LikeUnlike";
+import HTMLRenderer from 'react-html-renderer'
+import AdCard from "../components/cards/AdCard";
 
 dayjs.extend(relativeTime) //fromNow() // 3hours ago
 
@@ -54,18 +57,15 @@ export default function AdView() {
     }
 
     return <>
-
         <div className="container-fluid">
             <div className="row mt-2">
                 <div className="col-lg-4">
-
                     <div className="d-flex justify-content-between">
                         <button className="btn btn-primary disable mt-2">
                             {ad.type} for {ad.action}
                         </button>
                         <LikeUnlike ad={ad} />
                     </div>
-
                     <div className="mt-4 mb-4"> {ad?.sold ? "❌ Off market " : "✅ In market"}</div>
                     <h1>{ad?.address}</h1>
                     <AdFeatures ad={ad} />
@@ -74,15 +74,40 @@ export default function AdView() {
                     </h3>
                     <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
                 </div>
-
-
                 <div className="col-lg-8">
                     <ImageGallery photos={generatePhotosArray(ad?.photos)} />
                 </div>
-
             </div>
         </div>
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-8 offset-lg-2">
+                    <MapCard ad={ad} />
 
-        <pre>{JSON.stringify({ ad, related }, null, 4)}</pre>
+                    <br />
+                    <h1>{ad?.type} in {ad?.address} for {ad?.action} ${ad?.price}</h1>
+
+                    <AdFeatures ad={ad} />
+                    <hr />
+                    <h3 className="fw-bold">{ad?.title}</h3>
+
+                    <HTMLRenderer
+                        html=
+                        {ad?.description?.replaceAll(".", "<br/><br/>")}
+                    />
+
+                </div>
+            </div>
+        </div>
+        <div className="container-fluid">
+            <h4 className="text-center mb-3">Related Properties</h4>
+            <hr style={{ width: "33%"}} />
+
+            <div className="row">
+                {related?.map((ad) => (
+                    <AdCard key={ad._id} ad={ad} />
+                ))}
+            </div>
+        </div>
     </>
 }  

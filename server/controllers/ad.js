@@ -165,7 +165,7 @@ export const read = async (req, res) => {
             action: ad.action,
             type: ad.type,
             address: {
-                $regex: ad.googleMap[0].city,
+                $regex: ad.googleMap[0].administrativeLevels.level1long || "",
                 $options: "i",
             },
         })
@@ -201,7 +201,7 @@ export const removeFromWishlist = async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.user._id, {
             $pull: { wishlist: req.params.adId }, //remove adId as its params
-        }, { new: true }) 
+        }, { new: true })
 
         const { password, resetCode, ...rest } = user._doc
         res.json(rest)

@@ -131,7 +131,7 @@ export const AdForm = ({ action, type }) => {
                     onChange={(e) => setAd({ ...ad, title: e.target.value })}
                 />
 
-                <input
+                <textarea
                     type="text"
                     min="0"
                     className="form-control mb-3"

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuth } from '../../contexts/auth'
-import { FcLike, FcDislike, FcLikePlaceholder } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast'
 
