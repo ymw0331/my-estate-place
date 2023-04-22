@@ -19,6 +19,7 @@ import AdView from "./pages/AdView"
 import Footer from "./components/nav/Footer";
 import Profile from "./pages/user/Profile";
 import Settings from "./pages/user/Setttings";
+import AdEdit from "./pages/user/ad/AdEdit";
 
 
 function App() {
@@ -46,10 +47,12 @@ function App() {
               <Route path="ad/create/rent/land" element={<RentLand />} />
               <Route path="user/profile" element={<Profile />} />
               <Route path="user/settings" element={<Settings />} />
+              <Route path="user/ad/:slug" element={<AdEdit />} />
 
             </Route>
 
             <Route path="/ad/:slug" element={<AdView />} />
+
 
 
 

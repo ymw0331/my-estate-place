@@ -5,6 +5,7 @@ import Ad from "../models/ad.js"
 import User from "../models/user.js"
 import NodeGeocoder from "node-geocoder"
 import { emailTemplate } from '../helpers/email.js'
+import ad from "../models/ad.js";
 
 export const uploadImage = async (req, res, next) => {
     try {
@@ -245,6 +246,88 @@ export const contactSeller = async (req, res) => {
                     }
                 }
             );
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const userAds = async (req, res) => {
+    try {
+        const perPage = 3
+        const page = req.params.page ? req.params.page : 1
+        const total = await Ad.find({ postedBy: req.user._id })
+        const ads = await Ad.find({ postedBy: req.user._id })
+            .select('-photos.Key -photos.key -photos.ETag -photos.Bucket -location -googleMap')
+            .populate('postedBy', "name email username phone company")
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .sort({ createdAt: -1 })
+
+        res.json({ ads, total: total.length })
+
+    } catch (err) {
+        console.log(err)
+
+    }
+}
+
+
+export const update = async (req, res) => {
+    try {
+        const { photos, price, type, address, description } = req.body;
+        const ad = await Ad.findById(req.params._id);
+        const owner = req.user._id === ad?.postedBy;
+
+        if (owner) {
+            return res.json({ error: "Permission denied" });
+        } else {
+            // validation
+            if (!photos.length) {
+                return res.json({ error: "Photos are required" });
+            }
+            if (!price) {
+                return res.json({ error: "Price is required" });
+            }
+            if (!type) {
+                return res.json({ error: "Is property hour or land?" });
+            }
+            if (!address) {
+                return res.json({ error: "Address is required" });
+            }
+            if (!description) {
+                return res.json({ error: "Description are required" });
+            }
+
+            const geo = await config.GOOGLE_GEOCODER.geocode(address);
+
+
+            await ad.updateOne({
+                ...req.body,
+                slug: ad.slug,
+                location: {
+                    type: "Point",
+                    coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
+                },
+            });
+
+            res.json({ ok: true });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const remove = async (req, res) => {
+    try {
+        const ad = await Ad.findById(req.params._id);
+        const owner = req.user._id == ad?.postedBy;
+
+        if (!owner) {
+            return res.json({ error: "Permission denied" });
+        } else {
+            await Ad.findByIdAndRemove(ad._id);
+            res.json({ ok: true });
         }
     } catch (err) {
         console.log(err);
