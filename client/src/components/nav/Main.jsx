@@ -48,7 +48,7 @@ export default function Main() {
 
             {loggedIn ? (<div className="dropdown">
                 <li>
-                    <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" >
+                    <a className="nav-link dropdown-toggle pointer" data-bs-toggle="dropdown" >
                         {auth?.user?.name ? auth.user.name : auth.user.username}
                     </a>
 

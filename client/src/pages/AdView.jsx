@@ -7,6 +7,7 @@ import AdFeatures from "../components/cards/AdFeatures";
 import { formatNumber } from "../helpers/ad";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime'
+import LikeUnlike from "../components/misc/LikeUnlike";
 
 dayjs.extend(relativeTime) //fromNow() // 3hours ago
 
@@ -57,9 +58,13 @@ export default function AdView() {
         <div className="container-fluid">
             <div className="row mt-2">
                 <div className="col-lg-4">
-                    <button className="btn btn-primary disable mt-2">
-                        {ad.type} for {ad.action}
-                    </button>
+
+                    <div className="d-flex justify-content-between">
+                        <button className="btn btn-primary disable mt-2">
+                            {ad.type} for {ad.action}
+                        </button>
+                        <LikeUnlike ad={ad} />
+                    </div>
 
                     <div className="mt-4 mb-4"> {ad?.sold ? "❌ Off market " : "✅ In market"}</div>
                     <h1>{ad?.address}</h1>

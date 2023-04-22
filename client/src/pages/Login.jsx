@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import toast from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/auth";
 
 
@@ -17,6 +17,7 @@ export const Login = () => {
 
     // hooks
     const navigate = useNavigate();
+    const location = useLocation();
 
 
     const handleSubmit = async (e) => {
@@ -38,7 +39,8 @@ export const Login = () => {
                 localStorage.setItem("auth", JSON.stringify(data))
                 toast.success("Login successful.")
                 setLoading(false)
-                navigate("/")
+                location?.state !== null ?
+                    navigate(location.state) : navigate("/dashboard")
 
             }
             console.log(data)
