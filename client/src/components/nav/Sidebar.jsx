@@ -11,6 +11,19 @@ const Sidebar = () => {
                         Dashboard
                     </NavLink>
                 </li>
+
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/user/wishlist">
+                        Wishlist
+                    </NavLink>
+                </li>
+
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/user/enquiries">
+                        Enquiries
+                    </NavLink>
+                </li>
+
                 <li className="nav-item">
                     <NavLink className="nav-link" to="/ad/create">
                         Create Ad
@@ -27,6 +40,7 @@ const Sidebar = () => {
                         Settings
                     </NavLink>
                 </li>
+
             </ul>
         </>
     )

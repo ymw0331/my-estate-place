@@ -54,7 +54,7 @@ export default function ContactSeller({ ad }) {
     return (
         <>
             <div className="row">
-                <div className="col-lg-8 offset-lg-2">
+                <div className="col-lg-8 offset-lg-2 mt-4">
                     <h3>
                         Contact{" "}
                         {ad?.postedBy?.name ? ad?.postedBy?.name : ad?.postedBy?.username}
