@@ -142,9 +142,9 @@ export const ads = async (req, res) => {
     } catch (err) {
         console.log(err)
     }
-
-
 }
+
+
 
 
 export const read = async (req, res) => {
@@ -358,5 +358,35 @@ export const wishlist = async (req, res) => {
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+
+
+export const adsForSell = async (req, res) => {
+    try {
+        const ads = await Ad.find({ action: "Sell" })
+            .select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+            .sort({ createdAt: -1 })
+            .limit(24)
+
+        res.json({ ads })
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const adsForRent = async (req, res) => {
+    try {
+        const ads = await Ad.find({ action: "Rent" })
+            .select('-googleMap -location -photo.Key -photo.key -photo.ETag')
+            .sort({ createdAt: -1 })
+            .limit(24)
+
+        res.json({ ads })
+
+    } catch (err) {
+        console.log(err)
     }
 }

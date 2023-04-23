@@ -24,6 +24,8 @@ import Wishlist from "./pages/user/ad/Wishlist";
 import Enquiries from "./pages/user/ad/Enquiries";
 import Agents from "./pages/Agents";
 import Agent from "./pages/Agent";
+import Buy from "./pages/Buy";
+import Rent from "./pages/Rent";
 
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
             <Route path="/ad/:slug" element={<AdView />} />
             <Route path="/agents" element={<Agents />} />
             <Route path="/agent/:username" element={<Agent />} />
+            <Route path="/buy" element={<Buy />} />
+            <Route path="/rent" element={<Rent />} />
 
 
           </Routes>
