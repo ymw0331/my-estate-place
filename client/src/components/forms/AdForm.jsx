@@ -6,9 +6,13 @@ import axios from "axios";
 import ImageUpload from "./ImageUpload";
 import { useNavigate } from 'react-router-dom'
 import toast from "react-hot-toast"
+import { useAuth } from "../../contexts/auth";
 
 
 export const AdForm = ({ action, type }) => {
+
+    //context
+    const [auth, setAuth] = useAuth()
 
     //state
     const [ad, setAd] = useState({
@@ -41,9 +45,24 @@ export const AdForm = ({ action, type }) => {
                 toast.error(data.error)
                 setAd({ ...ad, loading: false })
             } else {
+
+                //data {user,ad}
+                setAuth({ ...auth, user: data.user })
+
+                //update user in context
+                const fromLS = JSON.parsee(localStorage.getItem("auth"))
+                fromLS.user = data.user
+                localStorage.setItem("auth", JSON.stringify(fromLS))
+
+
+                //update user in local storage
                 toast.success("Ad created successfully")
                 setAd({ ...ad, loading: false })
-                navigate("/dashboard")
+
+                // navigate("/dashboard")
+
+                //relaod page on redirect 
+                window.location.href = '/dashboard'
             }
 
         } catch (err) {

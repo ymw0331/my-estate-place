@@ -17,4 +17,9 @@ router.get("/profile/:username", auth.publicProfile);
 router.put("/update-password", requireSignin, auth.updatePassword);
 router.put("/update-profile", requireSignin, auth.updateProfile);
 
+router.get("/agents", auth.agents)
+router.get("/agent-ad-count/:_id", auth.agentAdCount)
+router.get("/agent/:username", auth.agent)
+
+
 export default router;

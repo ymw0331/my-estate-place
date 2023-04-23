@@ -22,6 +22,8 @@ import Settings from "./pages/user/Setttings";
 import AdEdit from "./pages/user/ad/AdEdit";
 import Wishlist from "./pages/user/ad/Wishlist";
 import Enquiries from "./pages/user/ad/Enquiries";
+import Agents from "./pages/Agents";
+import Agent from "./pages/Agent";
 
 
 function App() {
@@ -29,7 +31,8 @@ function App() {
     <>
       <BrowserRouter>
         <AuthProvider>
-          <Main />
+
+          <Main className="content" />
           <Toaster />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -56,13 +59,14 @@ function App() {
             </Route>
 
             <Route path="/ad/:slug" element={<AdView />} />
-
-
-
+            <Route path="/agents" element={<Agents />} />
+            <Route path="/agent/:username" element={<Agent />} />
 
 
           </Routes>
-          <Footer />
+
+          <Footer className="footer" />
+
         </AuthProvider>
       </BrowserRouter>
     </>

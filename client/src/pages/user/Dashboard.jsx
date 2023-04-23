@@ -38,19 +38,6 @@ const Dashboard = () => {
         }
     }
 
-    // const loadMore = async () => {
-    //     try {
-    //         setLoading(true)
-    //         const { data } = await axios.get(`/user-ads/${page}`)
-    //         setAds([...ads, ...data.ads])
-    //         setTotal(data.total)
-    //         setLoading(false)
-
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     return (
         <div>
             <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1>

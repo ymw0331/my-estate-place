@@ -23,4 +23,5 @@ router.delete("/ad/:_id", requireSignin, ad.remove)
 router.get("/enquired-properties", requireSignin, ad.enquiredProperties)
 router.get("/wishlist", requireSignin, ad.wishlist)
 
+
 export default router
