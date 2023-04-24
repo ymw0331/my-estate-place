@@ -1,5 +1,5 @@
 import Sidebar from "../../../components/nav/Sidebar"
-import { AdForm } from "../../../components/forms/AdForm"
+import AdForm from "../../../components/forms/AdForm"
 
 
 const SellLand = () => {

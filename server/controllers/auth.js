@@ -1,4 +1,4 @@
-import * as config from "../config.js";
+// import * as config from "../config.js";
 import jwt from "jsonwebtoken";
 import { emailTemplate } from "../helpers/email.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
@@ -7,12 +7,34 @@ import Ad from "../models/ad.js"
 import { nanoid } from "nanoid";
 import validator from "email-validator";
 
+import SES from "aws-sdk/clients/ses.js"
+import S3 from 'aws-sdk/clients/s3.js'
+import NodeGeocoder from "node-geocoder"
+
+
+const AWSSES = new SES(awsConfig)
+const AWSS3 = new S3(awsConfig)
+
+
+awsConfig = {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.envAWS_SECRET_ACCESS_KEY_ID,
+  region: "ap-southeast-1",
+  apiVersion: "2010-12-01",
+}
+const options = {
+  provider: 'google',
+  apiKey: process.env.GOOGLE_PLACES_KEY,
+  formatter: null
+};
+
+const GOOGLE_GEOCODER = NodeGeocoder(options);
 
 const tokenAndUserResponse = (req, res, user) => {
-  const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
-  const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+  const refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 
@@ -55,18 +77,18 @@ export const preRegister = async (req, res) => {
       return res.json({ error: "Email is taken" });
     }
 
-    const token = jwt.sign({ email, password }, config.JWT_SECRET, {
+    const token = jwt.sign({ email, password }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    config.AWSSES.sendEmail(
+    AWSSES.sendEmail(
       emailTemplate(
         email,
         `
       <p>Please click the link below to activate your account.</p>
-      <a href="${config.CLIENT_URL}/auth/account-activate/${token}">Activate my account</a>
+      <a href="${process.env.CLIENT_URL}/auth/account-activate/${token}">Activate my account</a>
       `,
-        config.REPLY_TO,
+        process.env.REPLY_TO,
         "Activate your acount"
       ),
       (err, data) => {
@@ -88,7 +110,7 @@ export const preRegister = async (req, res) => {
 export const register = async (req, res) => {
   try {
     // console.log(req.body);
-    const { email, password } = jwt.verify(req.body.token, config.JWT_SECRET);
+    const { email, password } = jwt.verify(req.body.token, process.env.JWT_SECRET);
 
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -145,18 +167,18 @@ export const forgotPassword = async (req, res) => {
       user.resetCode = resetCode;
       user.save();
 
-      const token = jwt.sign({ resetCode }, config.JWT_SECRET, {
+      const token = jwt.sign({ resetCode }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
 
-      config.AWSSES.sendEmail(
+      AWSSES.sendEmail(
         emailTemplate(
           email,
           `
           <p>Please click the link below to access your account.</p>
-          <a href="${config.CLIENT_URL}/auth/access-account/${token}">Access my account</a>
+          <a href="${process.env.CLIENT_URL}/auth/access-account/${token}">Access my account</a>
         `,
-          config.REPLY_TO,
+          process.env.REPLY_TO,
           "Access your account"
         ),
         (err, data) => {
@@ -178,7 +200,7 @@ export const forgotPassword = async (req, res) => {
 
 export const accessAccount = async (req, res) => {
   try {
-    const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
+    const { resetCode } = jwt.verify(req.body.resetCode, process.env.JWT_SECRET);
 
     const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" });
 
@@ -191,7 +213,7 @@ export const accessAccount = async (req, res) => {
 
 export const refreshToken = async (req, res) => {
   try {
-    const { _id } = jwt.verify(req.headers.refresh_token, config.JWT_SECRET);
+    const { _id } = jwt.verify(req.headers.refresh_token, process.env.JWT_SECRET);
 
     const user = await User.findById(_id);
 
