@@ -45,8 +45,8 @@ Realist Platform is a MERN (MongoDB, Express, React, Node.js) application with A
 
 To get started with the project, you'll need to have the following installed on your machine:
 
-- Node.js (version 14.0 or later)
-- MongoDB (version 4.4 or later)
+- Node.js 
+- MongoDB 
 
 ## Installation
 
