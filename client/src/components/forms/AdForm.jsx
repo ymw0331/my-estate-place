@@ -81,7 +81,7 @@ export const AdForm = ({ action, type }) => {
                     apiKey={GOOGLE_PLACES_KEY}
                     apiOptions="my"
                     selectProps={{
-                        defaultInputVlue: ad?.address,
+                        defaultInputValue: ad?.address,
                         placeholder: "Search for address...",
                         onChange: ({ value }) => {
                             setAd({ ...ad, address: value.description })

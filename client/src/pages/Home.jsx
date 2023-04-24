@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/auth";
 import React from 'react'
 import axios from "axios";
 import AdCard from "../components/cards/AdCard";
+import SearchForm from "../components/forms/SearchForm";
 
 export const Home = () => {
 
@@ -27,6 +28,7 @@ export const Home = () => {
 
     return (
         <>
+            <SearchForm />
             <h1 className="display-1 bg-primary text-light p-5">For Sell</h1>
             <div className="container">
                 <div className="row">

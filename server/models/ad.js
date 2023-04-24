@@ -47,5 +47,5 @@ const schema = new Schema({
 },
     { timestamps: true })
 
-
+schema.index({ location: "2dsphere" })
 export default model("Ad", schema)

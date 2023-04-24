@@ -390,3 +390,43 @@ export const adsForRent = async (req, res) => {
         console.log(err)
     }
 }
+
+
+export const search = async (req, res) => {
+
+    try {
+        // console.log('req query', req.query)
+        const { action, address, type, priceRange } = req.query
+        const geo = await config.GOOGLE_GEOCODER.geocode(address)
+        // console.log("geo ==>", geo)
+
+        const ads = await Ad.find({
+            action: action === "Buy" ? "Sell" : "Rent",
+            type,
+            price: {
+                $gte: parseInt(priceRange[0]),
+                $lte: parseInt(priceRange[1]),
+            },
+            location: {
+                $near: {
+                    $maxDistance: 50000,
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude]
+                    }
+                }
+            }
+        })
+            .limit(24)
+            .sort({ createdAt: -1 })
+            .select('-photos.key -photos.Key -photos.ETag -photos.Bucket -location -googleMap')
+
+        // console.log("ads ==>", ads)
+
+
+        res.json(ads)
+
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from "./contexts/auth"
+import { SearchProvider } from "./contexts/search"
 import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -26,51 +27,62 @@ import Agents from "./pages/Agents";
 import Agent from "./pages/Agent";
 import Buy from "./pages/Buy";
 import Rent from "./pages/Rent";
-
+import Search from "./pages/Search";
 
 function App() {
+
+
+  const PageNotFound = () => (
+    <div className="text-center p-5">
+      404 PAGE NOT FOUND!
+    </div>
+  )
+
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
+          <SearchProvider>
 
-          <Main className="content" />
-          <Toaster />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/auth/account-activate/:token" element={<AccountActivate />} />
-            <Route path="/auth/forgot-password/" element={<ForgotPassword />} />
-            <Route path="/auth/access-account/:token" element={<AccessAccount />} />
+            <Main className="content" />
+            <Toaster />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/auth/account-activate/:token" element={<AccountActivate />} />
+              <Route path="/auth/forgot-password/" element={<ForgotPassword />} />
+              <Route path="/auth/access-account/:token" element={<AccessAccount />} />
 
-            {/* This is private routes, only authenticated users can access */}
-            <Route path="/" element={<PrivateRoute />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="ad/create" element={<AdCreate />} />
-              <Route path="ad/create/sell/house" element={<SellHouse />} />
-              <Route path="ad/create/sell/land" element={<SellLand />} />
-              <Route path="ad/create/rent/house" element={<RentHouse />} />
-              <Route path="ad/create/rent/land" element={<RentLand />} />
-              <Route path="user/profile" element={<Profile />} />
-              <Route path="user/settings" element={<Settings />} />
-              <Route path="user/ad/:slug" element={<AdEdit />} />
-              <Route path="user/wishlist" element={<Wishlist />} />
-              <Route path="user/enquiries" element={<Enquiries />} />
+              {/* This is private routes, only authenticated users can access */}
+              <Route path="/" element={<PrivateRoute />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="ad/create" element={<AdCreate />} />
+                <Route path="ad/create/sell/house" element={<SellHouse />} />
+                <Route path="ad/create/sell/land" element={<SellLand />} />
+                <Route path="ad/create/rent/house" element={<RentHouse />} />
+                <Route path="ad/create/rent/land" element={<RentLand />} />
+                <Route path="user/profile" element={<Profile />} />
+                <Route path="user/settings" element={<Settings />} />
+                <Route path="user/ad/:slug" element={<AdEdit />} />
+                <Route path="user/wishlist" element={<Wishlist />} />
+                <Route path="user/enquiries" element={<Enquiries />} />
 
-            </Route>
+              </Route>
 
-            <Route path="/ad/:slug" element={<AdView />} />
-            <Route path="/agents" element={<Agents />} />
-            <Route path="/agent/:username" element={<Agent />} />
-            <Route path="/buy" element={<Buy />} />
-            <Route path="/rent" element={<Rent />} />
+              <Route path="/ad/:slug" element={<AdView />} />
+              <Route path="/agents" element={<Agents />} />
+              <Route path="/agent/:username" element={<Agent />} />
 
+              <Route path="/buy" element={<Buy />} />
+              <Route path="/rent" element={<Rent />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/*" element={<PageNotFound />} />
 
-          </Routes>
+            </Routes>
 
-          <Footer className="footer" />
-
+            <Footer className="footer" />
+          </SearchProvider>
         </AuthProvider>
       </BrowserRouter>
     </>
