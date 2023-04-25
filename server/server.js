@@ -5,7 +5,8 @@ import mongoose from "mongoose"
 import { DATABASE } from "./config.js"
 import authRoutes from "./routes/auth.js"
 import adRoutes from "./routes/ad.js"
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const app = express()
 

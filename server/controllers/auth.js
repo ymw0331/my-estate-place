@@ -6,29 +6,19 @@ import User from "../models/user.js";
 import Ad from "../models/ad.js"
 import { nanoid } from "nanoid";
 import validator from "email-validator";
-
 import SES from "aws-sdk/clients/ses.js"
-import S3 from 'aws-sdk/clients/s3.js'
-import NodeGeocoder from "node-geocoder"
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-
-const AWSSES = new SES(awsConfig)
-const AWSS3 = new S3(awsConfig)
-
-
-awsConfig = {
+const awsConfig = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.envAWS_SECRET_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
   region: "ap-southeast-1",
   apiVersion: "2010-12-01",
 }
-const options = {
-  provider: 'google',
-  apiKey: process.env.GOOGLE_PLACES_KEY,
-  formatter: null
-};
 
-const GOOGLE_GEOCODER = NodeGeocoder(options);
+const AWSSES = new SES(awsConfig)
+
 
 const tokenAndUserResponse = (req, res, user) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {

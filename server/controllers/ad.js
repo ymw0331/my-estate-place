@@ -6,24 +6,28 @@ import User from "../models/user.js"
 import NodeGeocoder from "node-geocoder"
 import { emailTemplate } from '../helpers/email.js'
 import ad from "../models/ad.js";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import SES from "aws-sdk/clients/ses.js"
 import S3 from 'aws-sdk/clients/s3.js'
-import NodeGeocoder from "node-geocoder"
 
-const AWSSES = new SES(awsConfig)
-const AWSS3 = new S3(awsConfig)
 
-awsConfig = {
+const awsConfig = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.envAWS_SECRET_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
     region: "ap-southeast-1",
     apiVersion: "2010-12-01",
 }
 
+
+const AWSSES = new SES(awsConfig)
+const AWSS3 = new S3(awsConfig)
+
+
 const options = {
     provider: 'google',
-    apiKey: process.env.GOOGLE_PLACES_KEY,
+    apiKey: process.env.GOOGLE_PLACES_API,
     formatter: null
 };
 
