@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 export const Register = () => {
 
     // states
-    const [email, setEmail] = useState("ymw0331@hotmail.com")
-    const [password, setPassword] = useState("ymw0331")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false);
 
 
