@@ -25,5 +25,8 @@
     "node-geocoder": "^4.2.0",
     "nodemon": "^2.0.22",
     "slugify": "^1.6.6"
+  },
+  "engines": {
+    "node": ">=14 <15"
   }
 }
