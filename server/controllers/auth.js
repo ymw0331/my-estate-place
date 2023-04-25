@@ -11,8 +11,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const awsConfig = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_ID,
+  accessKeyId: process.env.MY_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY_ID,
   region: "ap-southeast-1",
   apiVersion: "2010-12-01",
 }

@@ -70,8 +70,8 @@ git clone https://github.com/ymw0331/real-estate-marketplace-mern-aws-app.git
 
 ```sh
     DATABASE=<MongoDB connection string>
-    AWS_ACCESS_KEY_ID=<AWS access key>
-    AWS_SECRET_ACCESS_KEY_ID=<AWS secret access key>
+    MY_AWS_ACCESS_KEY_ID=<AWS access key>
+    MY_AWS_SECRET_ACCESS_KEY_ID=<AWS secret access key>
     EMAIL_FROM=<Sender email address>
     REPLY_TO=<Reply-to email address>
     GOOGLE_PLACES_KEY=<Google Maps API key>
