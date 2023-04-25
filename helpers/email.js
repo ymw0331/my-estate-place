@@ -1,4 +1,4 @@
-import * as config from "../config.js";
+// import * as config from "../config.js";
 
 const style = `
     background: #eee;
@@ -8,7 +8,7 @@ const style = `
 
 export const emailTemplate = (email, content, replyTo, subject) => {
   return {
-    Source: config.EMAIL_FROM,
+    Source: process.env.EMAIL_FROM,
     Destination: {
       ToAddresses: [email],
     },

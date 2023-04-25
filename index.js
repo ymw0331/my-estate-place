@@ -2,7 +2,6 @@ import express from "express"
 import morgan from "morgan"
 import cors from "cors"
 import mongoose from "mongoose"
-import { DATABASE } from "./config.js"
 import authRoutes from "./routes/auth.js"
 import adRoutes from "./routes/ad.js"
 import * as dotenv from 'dotenv';
@@ -11,7 +10,7 @@ dotenv.config();
 const app = express()
 
 // db
-mongoose.connect(DATABASE)
+mongoose.connect(process.env.DATABASE)
     .then(() => console.log("**MongoDB Connected**"))
     .catch((err) => console.log(err))
 
@@ -22,12 +21,12 @@ app.use(morgan("dev"))
 app.use(cors())
 
 
-// routes middleware
+// routes middlewarez
 app.use("/api", authRoutes)
 app.use("/api", adRoutes)
 
 
 // port
-const port = process.env.PORT || 8001;
+const port = process.env.PORT || 8000;
 
 app.listen( port, () => console.log( `Server is running on port ${ port }` ) );
