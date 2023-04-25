@@ -1,5 +1,4 @@
 import GoogleMapReact from "google-map-react";
-import { GOOGLE_PLACES_KEY } from "../../config";
 
 // 151.20929, -33.86882
 export default function MapCard({ ad }) {
@@ -16,7 +15,7 @@ export default function MapCard({ ad }) {
         return (
             <div style={{ width: "100%", height: "350px" }}>
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: GOOGLE_PLACES_KEY }}
+                    bootstrapURLKeys={{ key: process.env.GOOGLE_PLACES_KEY }}
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
                 >

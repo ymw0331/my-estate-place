@@ -1,4 +1,3 @@
-// import * as config from "../config.js"
 import { nanoid } from "nanoid"
 import slugify from "slugify";
 import Ad from "../models/ad.js"

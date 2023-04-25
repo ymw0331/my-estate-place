@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_KEY } from "../../../config";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "../../../components/forms/ImageUpload";
 import axios from "axios";
@@ -9,6 +8,7 @@ import toast from "react-hot-toast";
 import Sidebar from "../../../components/nav/Sidebar";
 
 export default function AdEdit({ action, type }) {
+
   // state
   const [ad, setAd] = useState({
     _id: "",
@@ -27,6 +27,7 @@ export default function AdEdit({ action, type }) {
     action,
   });
   const [loaded, setLoaded] = useState(false);
+
 
   // hooks
   const navigate = useNavigate();
@@ -102,6 +103,8 @@ export default function AdEdit({ action, type }) {
     }
   };
 
+
+
   return (
     <div>
       <h1 className="display-1 bg-primary text-light p-5">Ad Edit</h1>
@@ -112,8 +115,8 @@ export default function AdEdit({ action, type }) {
           <ImageUpload ad={ad} setAd={setAd} />
           {loaded ? (
             <GooglePlacesAutocomplete
-              apiKey={GOOGLE_PLACES_KEY}
-              apiOptions="au"
+              apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+              apiOptions="my"
               selectProps={{
                 defaultInputValue: ad?.address,
                 placeholder: "Search for address..",

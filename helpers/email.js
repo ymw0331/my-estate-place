@@ -1,4 +1,3 @@
-// import * as config from "../config.js";
 
 const style = `
     background: #eee;

@@ -1,19 +1,24 @@
 import { useSearch } from "../../contexts/search";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { GOOGLE_PLACES_KEY } from "../../config";
 import { sellPrices, rentPrices } from "../../helpers/priceList";
 import queryString from "query-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 
 export default function SearchForm() {
     // context
     const [search, setSearch] = useSearch();
+
     // hooks
     const navigate = useNavigate();
 
     // console.log(sellPrices, rentPrices);
+    // const googleplaceapi = process.env.GOOGLE_PLACES_KEY
+    // console.log("googleplacesAPI ==> ", googleplaceapi)
+
+
 
     const handleSearch = async () => {
         setSearch({ ...search, loading: false });
@@ -47,8 +52,8 @@ export default function SearchForm() {
                 <div className="row">
                     <div className="col-lg-12 form-control">
                         <GooglePlacesAutocomplete
-                            apiKey={GOOGLE_PLACES_KEY}
-                            apiOptions="au"
+                            apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+                            apiOptions="my"
                             selectProps={{
                                 defaultInputValue: search?.address,
                                 placeholder: "Search for address..",
@@ -57,6 +62,32 @@ export default function SearchForm() {
                                 },
                             }}
                         />
+
+                        {/* <GooglePlacesAutocomplete
+                            apiKey={process.env.GOOGLE_PLACES_KEY}
+                            apiOptions="my"
+                            selectProps={{
+                                defaultInputValue: search?.address,
+                                placeholder: "Search for address..",
+                                onChange: ({ value }) => {
+                                    setSearch({ ...search, address: value.description });
+                                },
+                            }}
+                        /> */}
+
+
+                        {/* <GooglePlacesAutocomplete
+                            apiKey={process.env.GOOGLE_PLACES_KEY}
+                            apiOptions="my"
+                            selectProps={{
+                                defaultInputValue: ad?.address,
+                                placeholder: "Search for address..",
+                                onChange: ({ value }) => {
+                                    setAd({ ...ad, address: value.description });
+                                },
+                            }}
+                        /> */}
+
                     </div>
                 </div>
 

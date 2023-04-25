@@ -1,4 +1,3 @@
-// import * as config from "../config.js";
 import jwt from "jsonwebtoken";
 import { emailTemplate } from "../helpers/email.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
